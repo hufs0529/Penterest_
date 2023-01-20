@@ -1,0 +1,44 @@
+
+
+
+
+
+# jpa의 persistence.xml과 같은 DB 설정코드 같은 파일
+logging:
+  pattern:
+    console: "[%d{MM:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+  level:
+    dev.bank : DEBUG
+
+
+spring:
+  #DB 연결
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    show-sql: true
+    hibernate:
+      #      ddl-auto : create
+      hibernate.hbm2ddl.auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

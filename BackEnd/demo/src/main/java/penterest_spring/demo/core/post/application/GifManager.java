@@ -42,7 +42,7 @@ public class GifManager implements GifFinder,GifEditor {
     @Override
     public String create(Gif newGif) {
         if(gifRepository.findById(newGif.getId()).isPresent()) {
-            String message = String.format("이미 존재하는 user id 입니다. %s", newUser.getId());
+            String message = String.format("이미 존재하는 user id 입니다. %s", newGif.getId());
             throw new IllegalArgumentException(message);
         }
         gifRepository.save(newGif);
