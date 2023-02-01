@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #555;
+}
+
+img {
+    border: 0;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: aqua;
+
+}
+
+.bimg_left {
+    width: 33.33%;
+    height: 100vh;
+    background-image: url(../images/1.jpeg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+    overflow: hidden;
+    z-index: 1;
+    /* background: url(../images/1.jpeg) repeat 0 0; */
+}
+
+.bimg_right {
+    width: 33.34%;
+    height: 100vh;
+    background-image: url(../images/9.jpeg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: cover;
+    overflow: hidden;
+    z-index: 1;
+    /* background: url(../images/1.jpeg) repeat 0 0; */
+}
+
+.center_page {
+    margin: auto;
+    width: 40%;
+    max-width: 720px;
+    min-width: 480px;
+    height: inherit;
+    background-color: white;
+    z-index: 990;
+}
+
+.signup {
+    width: 100%;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: right;
+}
+
+.signup>a {
+    margin-right: 5vh;
+    color: blue;
+}
+
+.signup>p {
+    margin-right: 5px;
+}
+
+.title {
+    margin-left: 5vh;
+    margin-top: 5vh;
+}
+
+h2 {
+    margin-top: 10px;
+}
+
+.word_input {
+    margin-top: 20px;
+    margin-left: 5vh;
+}
