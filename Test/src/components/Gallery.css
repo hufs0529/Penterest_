@@ -1,0 +1,26 @@
+.main {
+    margin-top: 80px;
+    width: inherit;
+    height: max-content;
+    position: relative;
+    background-color: cyan;
+}
+
+.main h2 {
+    text-align: center;
+}
+
+/* .main_contents {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+
+} */
+
+.main_contents img {
+    width: fit-content;
+    height: fit-content;
+    background-size: cover;
+}
