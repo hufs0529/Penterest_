@@ -29,6 +29,10 @@ header {
     align-items: center;
 }
 
+/* .nav_title {
+    display: flex;
+} */
+
 .logo {
     width: 70px;
     height: 70px;
@@ -36,12 +40,26 @@ header {
     overflow: hidden;
 }
 
+/* 이름 비노출시 */
+/* .logo h1 {
+    display: inline-block;
+    margin-top: 20px;
+    transform: scale(2.5);
+    width: 70px;
+    height: 70px;
+} */
+
+/* 이름 노출시 */
 .logo h1 {
     margin-top: 4px;
     transform: scale(1.8);
     width: 70px;
     height: 70px;
 }
+
+/* .nav_title h2 {
+    display: inline-block;
+} */
 
 .add {
     border-radius: 20px;

@@ -32,7 +32,6 @@ const Gallery = props => {
                     />
                 </div>
             )}
-            {/* <img src="../images/gallery/1.jpeg" alt="" /> */}
 
         </div>
     )

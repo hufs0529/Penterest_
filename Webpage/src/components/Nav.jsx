@@ -1,30 +1,15 @@
 import { Link } from "react-router-dom";
 import { useState } from 'react'
-import React from 'react'
-// import Upload from './Upload.jsx'
-import Upload_backup from './Upload_backup.jsx'
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import UploadModal from './UploadModal';
 import './Nav.css'
 
-const clickHandler = props => {
-    alert('제작중!');
-}
-
-const Nav = props => {
-
-    // const [isHovering, setIsHovering] = useState(0);
-
-    const [modalHandler, setModalHandler] = useState(false);
-
-    const showModal = () => {
-        setModalHandler(true)
-    }
-
+export default function Nav() {
     return (
         <>
-
             <header>
                 <div className="nav logo">
-                    {/* <img src="../images/logo.png" alt="" /> */}
                     <h1
                         style={{
                             backgroundSize: "cover",
@@ -32,16 +17,9 @@ const Nav = props => {
                             backgroundPosition: "center center",
                         }} />
                 </div>
-                <div className="nav add">
-                    <button
-                        className="add_btn"
-                        onClick={showModal}
-                    >
-                        추가
-                    </button>
-                    {/* {modalHandler && <Upload setModalHandler={setModalHandler} />} */}
-                    {modalHandler && <Upload_backup setModalHandler={setModalHandler} />}
-                </div>
+
+                <UploadModal />
+
                 <div className="nav src_field">
 
                     <input type="text" />
@@ -62,9 +40,6 @@ const Nav = props => {
             </header>
 
 
-
         </>
     )
 }
-
-export default Nav
