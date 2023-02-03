@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import * as React from 'react';
 import { Box, Button, Card, CardMedia, Container, Modal, Typography } from '@mui/material';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-// import Modal from '@mui/material/Modal';
 
 import axios from "axios";
 
@@ -89,7 +86,7 @@ export default function UploadModal() {
     };
 
     const CardStyle = {
-        // 왜 cover를 넣으니까 중앙정렬이 되지???
+        // cover를 넣으니까 중앙정렬이 됨: 이유는 모르겠다
         display: 'cover',
         width: '49%',
         height: '70vh',
@@ -153,11 +150,12 @@ export default function UploadModal() {
                                 sx={MediaStyle}
                                 component="img"
                                 alt={caption}
-                                image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
+                                // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
+                                src={gif}
                             >
                                 {/* <img src="https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif" alt={caption} /> */}
                             </CardMedia>
-                            {/* <div>{gif}{caption}</div> */}
+                            <div>{gif}{caption}</div>
                             {/* <img src="../images/GifSample.gif"></img> */}
 
                         </Card>

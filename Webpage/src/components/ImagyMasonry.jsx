@@ -16,26 +16,37 @@ const Label = styled(Paper)(({ theme }) => ({
 
 export default function ImageMasonry() {
     return (
-        <Box sx={{ width: 500, minHeight: 829 }}>
-            <Masonry columns={3} spacing={2}>
-                {itemData.map((item, index) => (
-                    <div key={index}>
-                        <Label>{index + 1}</Label>
-                        <img
-                            src={`${item.img}?w=162&auto=format`}
-                            srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            loading="lazy"
-                            style={{
-                                borderBottomLeftRadius: 4,
-                                borderBottomRightRadius: 4,
-                                display: 'block',
-                                width: '100%',
-                            }}
-                        />
-                    </div>
-                ))}
-            </Masonry>
+        <Box sx={{
+            width: '100%',
+            pt: '90px',
+            display: 'flex',
+            justifyContent: 'center',
+            // backgroundColor: 'cyan'
+        }}>
+            <Box sx={{
+                width: '80%',
+                minHeight: 829
+            }}>
+                <Masonry columns={4} spacing={2}>
+                    {itemData.map((item, index) => (
+                        <div key={index}>
+                            <Label>{index + 1}</Label>
+                            <img
+                                src={`${item.img}?w=162&auto=format`}
+                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+                                alt={item.title}
+                                loading="lazy"
+                                style={{
+                                    borderBottomLeftRadius: 4,
+                                    borderBottomRightRadius: 4,
+                                    display: 'block',
+                                    width: '100%',
+                                }}
+                            />
+                        </div>
+                    ))}
+                </Masonry>
+            </Box>
         </Box>
     );
 }
