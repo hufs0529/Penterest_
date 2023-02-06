@@ -150,8 +150,12 @@ export default function UploadModal() {
                                 sx={MediaStyle}
                                 component="img"
                                 alt={caption}
-                                // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
                                 src={gif}
+
+                            // 샘플 GIF
+                            // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
+                            // image='../images/GifSample2.gif'
+
                             >
                                 {/* <img src="https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif" alt={caption} /> */}
                             </CardMedia>

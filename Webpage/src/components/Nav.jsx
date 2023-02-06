@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from 'react'
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import { Button, Stack, TextField } from '@mui/material';
 import UploadModal from './UploadModal';
 import './Nav.css'
 
@@ -22,15 +22,30 @@ export default function Nav() {
 
                 <div className="nav src_field">
 
-                    <input type="text" />
+                    <Stack spacing={1} direction="row">
+                        {/* <input className="temp" type="text" /> */}
+                        <TextField fullWidth id="searchBox" label="검색" variant="outlined" />
+                        <Button
+                            variant="contained"
+                            href="https://google.com"
+                            style={{ ml: 1 }}
+                        >
+                            검색
+                        </Button>
+                        <Button
+                            variant="text"
+                        >
+                            필터
+                        </Button>
+                    </Stack>
                 </div>
                 <div className="nav src_set">
-                    <a href="#"> 검색 </a>
-                    <a href="#"> 필터 </a>
                 </div>
                 <div className="nav login">
-                    <Link to="/Login"> 로그인 </Link>
-                    <Link to="/Home"> 소개 </Link>
+                    <Stack spacing={1} direction="row">
+                        <Link to="/Login"> 로그인 </Link>
+                        <Link to="/Home"> 소개 </Link>
+                    </Stack>
                 </div>
                 <div className="nav prf_btn">
                     <a href="#">
