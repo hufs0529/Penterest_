@@ -23,9 +23,11 @@ header {
     width: 100%;
     height: 80px;
     z-index: 999;
+    margin: auto;
     background-color: white;
     display: flex;
-    justify-content: space-around;
+    flex: 1 1 auto;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -36,8 +38,12 @@ header {
 .logo {
     width: 70px;
     height: 70px;
+    margin-left: 10px;
     border-radius: 15px;
     overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
 }
 
 /* 이름 비노출시 */
@@ -80,9 +86,19 @@ header {
     width: 30px;
 } */
 
+.src_field {
+    flex-grow: 1;
+    min-width: 400px;
+}
+
 .prf_btn {
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 30px;
     overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
 }
 
 .prf_btn p {

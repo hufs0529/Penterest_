@@ -100,7 +100,14 @@ export default function UploadModal() {
 
     return (
         <>
-            <Button onClick={handleOpen}> 추가하기 </Button>
+            <Button
+                onClick={handleOpen}
+                style={{
+                    flex: '0 0 auto'
+                }}
+            >
+                추가하기
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
