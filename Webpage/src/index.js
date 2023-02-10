@@ -4,10 +4,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 // import App from './App.Import';
+import Nav from './components/Nav';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
+import ConvertModal from './components/ConvertModal';
 import reportWebVitals from './reportWebVitals';
+import ImageDetail from './components/ImageDetail';
 
 // 시간흐르는 기능(임시)
 // setInterval(() => {
@@ -24,11 +27,14 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <App /> */}
+      {/* <Nav /> */}
       <Routes>
         <Route path="/" element={<App />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
         <Route path='/Home' element={<Home />} />
+        <Route path='/ConvModal' element={<ConvertModal />} />
+        <Route path='/ImgDetail' element={<ImageDetail />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

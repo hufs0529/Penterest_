@@ -1,14 +1,12 @@
-// import { Link } from "react-router-dom";
 import * as React from 'react';
 import { useState, useLayoutEffect } from 'react';
-import { Box, Paper } from '@mui/material';
-import MUILink from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
-import ImageDetail from './ImageDetail';
 
 
-// 1. 페이지 리렌더링 함수: 안사용할시 최종본에서는 제거. 현재상태: 미사용
+// 1.
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {
@@ -27,6 +25,42 @@ function ShowWindowDimensions(props) {
     return <span>Window size: {width} x {height}</span>;
 }
 
+
+// 2.
+// function debounce(fn, ms) {
+//     let timer
+//     return _ => {
+//         clearTimeout(timer)
+//         timer = setTimeout(_ => {
+//             timer = null
+//             fn.apply(this, arguments)
+//         }, ms)
+//     };
+// }
+
+// function MyComponent() {
+//     const [dimensions, setDimensions] = useState({
+//         height: window.innerHeight,
+//         width: window.innerWidth
+//     })
+//     useEffect(() => {
+//         const debouncedHandleResize = debounce(function handleResize() {
+//             setDimensions({
+//                 height: window.innerHeight,
+//                 width: window.innerWidth
+//             })
+//         }, 1000)
+
+//         window.addEventListener('resize', debouncedHandleResize)
+
+//         return _ => {
+//             window.removeEventListener('resize', debouncedHandleResize)
+
+//         }
+//     })
+//     return <div>Rendered at {dimensions.width} x {dimensions.height}</div>
+// }
+
 // 코드 시작
 const Label = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -39,10 +73,13 @@ const Label = styled(Paper)(({ theme }) => ({
 }));
 
 export default function GalleryMasonry() {
+    // const [reload, setReload] = useState([]);
+    // const refresh = () => { setReload({}); }
+
     return (
         <Box sx={{
             width: '100%',
-            minWidth: 500,
+            minWidth: 600,
             minHeight: 829,
             pt: '90px',
             display: 'flex',
@@ -53,30 +90,12 @@ export default function GalleryMasonry() {
                 {itemData.map((item, index) => (
                     <div
                         key={index}
-                    >
+                        style={{
+                            // 고정너비형 반응형 개발중
+                            width: '236px'
+                        }}>
                         <Label>{index + 1}</Label>
-                        {/* 1. 클릭시 단순 이미지 url 연결 */}
-                        {/* <MUILink href={item.img}>
-                            <img
-                                src={`${item.img}?w=162&auto=format`}
-                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                                alt={item.title}
-                                loading="lazy"
-                                style={{
-                                    borderBottomLeftRadius: 4,
-                                    borderBottomRightRadius: 4,
-                                    display: 'block',
-                                    width: '100%'
-                                }}
-                            />
-                        </MUILink> */}
-
-                        {/* 2. 클릭시 이미지 페이지 연결 */}
-                        <ImageDetail
-                            item={item}
-                            index={index}
-                        />
-                        {/* <img
+                        <img
                             src={`${item.img}?w=162&auto=format`}
                             srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                             alt={item.title}
@@ -85,12 +104,21 @@ export default function GalleryMasonry() {
                                 borderBottomLeftRadius: 4,
                                 borderBottomRightRadius: 4,
                                 display: 'block',
-                                width: '100%'
+                                width: '100%',
                             }}
-                        /> */}
+                        />
                     </div>
                 ))}
             </Masonry>
+
+            {/* 반응형 참고 */}
+            {/* <Masonry columns={{ xs: 3, sm: 4 }} spacing={2}>
+                    {heights.map((height, index) => (
+                        <Label key={index} sx={{ height }}>
+                            {index + 1}
+                        </Label>
+                    ))}
+                </Masonry> */}
         </Box>
     );
 }

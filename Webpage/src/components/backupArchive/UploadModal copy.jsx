@@ -129,43 +129,37 @@ export default function UploadModal() {
                                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                             </Typography> */}
 
+                    <Box>
+                        <form onSubmit={submitVideo} encType="multipart/form-data">
 
-                    <form onSubmit={submitVideo} encType="multipart/form-data">
-                        <Button>
-                            <ConvertModal
-                                gif={gif}
-                                caption={caption}
-                                changeVideo={changeVideo}
-                                submitVideo={submitVideo}
-                                file={file}
+                            <input id="file" type="file" accept="video/mp4,video/mkv, 
+          video/x-m4v,video/*" onChange={changeVideo} />
+                            {/* <button type="submit">생성</button> */}
+                            <Button
+                                type='submit'
+                            >
+                                <ConvertModal
+                                    gif={gif}
+                                    caption={caption}
+                                // PhandClose={handleClose}
+                                />
+                            </Button>
 
-                            />
-                        </Button>
-
-                        <input id="file" type="file" accept="video/mp4,video/mkv, 
-video/x-m4v,video/*" onChange={changeVideo} />
-                        {/* <button type="submit">생성</button> */}
-                        <Button type='submit'> 생성하기 </Button>
-
-                    </form>
-
-                    <Card sx={[CardStyle, { mt: 2 }]}>
+                        </form>
+                    </Box>
+                    <Card sx={[CardStyle, { mr: 0 }]}>
                         <CardMedia
                             sx={MediaStyle}
-                            component="img"
-                            alt={caption}
-                            src={gif}
-
-                        // 샘플 GIF
-                        // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
-                        // image='../images/GifSample2.gif'
+                            component='video'
+                            autoPlay
+                            muted
+                            loop
+                            src={file.url}
 
                         >
-                            {/* <img src="https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif" alt={caption} /> */}
+                            {/* <video muted autoPlay loop id="video"></video> */}
+                            {/* {file.video && <video muted autoPlay loop src={file.url} />} */}
                         </CardMedia>
-                        {/* <div>{gif}{caption}</div> */}
-                        {/* <img src="../images/GifSample.gif"></img> */}
-
                     </Card>
 
                 </Box>

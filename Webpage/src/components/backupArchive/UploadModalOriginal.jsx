@@ -1,8 +1,6 @@
-// import { Link } from "react-router-dom";
 import { useState } from 'react'
 import * as React from 'react';
 import { Box, Button, Card, CardMedia, Container, Modal, Typography } from '@mui/material';
-import ConvertModal from './ConvertModal';
 
 import axios from "axios";
 
@@ -68,37 +66,32 @@ export default function UploadModal() {
 
     }
 
-    // 모달창 모듈
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    // 모달창 모듈
     const style = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '99%',
-        maxWidth: '600px',
+        // display: 'flex',
+        width: '90%',
         height: '80vh',
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        p: 2,
-        // 임시 저장용 수치: 완성본에서는 지울 것
-        // display: 'flex',
-        // width: '100%',
-        // justifyContent: 'space-between',
+        p: 4,
     };
 
     const CardStyle = {
         // cover를 넣으니까 중앙정렬이 됨: 이유는 모르겠다
         display: 'cover',
-        width: '100%',
+        width: '49%',
         height: '70vh',
         bgcolor: '#ddd',
         border: '2px dashed #000',
-        mt: 2
     };
 
     const MediaStyle = {
@@ -110,7 +103,7 @@ export default function UploadModal() {
             <Button
                 onClick={handleOpen}
                 style={{
-                    flex: '0 0 auto',
+                    flex: '0 0 auto'
                 }}
             >
                 추가하기
@@ -129,44 +122,55 @@ export default function UploadModal() {
                                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                             </Typography> */}
 
+                    <Box>
+                        <form onSubmit={submitVideo} encType="multipart/form-data">
 
-                    <form onSubmit={submitVideo} encType="multipart/form-data">
-                        <Button>
-                            <ConvertModal
-                                gif={gif}
-                                caption={caption}
-                                changeVideo={changeVideo}
-                                submitVideo={submitVideo}
-                                file={file}
+                            <input id="file" type="file" accept="video/mp4,video/mkv, 
+          video/x-m4v,video/*" onChange={changeVideo} />
+                            <button type="submit">생성</button>
 
-                            />
-                        </Button>
+                        </form>
+                    </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                        mt: 2
+                    }}>
+                        <Card sx={[CardStyle, { mr: 0 }]}>
+                            <CardMedia
+                                sx={MediaStyle}
+                                component='video'
+                                autoPlay
+                                muted
+                                loop
+                                src={file.url}
 
-                        <input id="file" type="file" accept="video/mp4,video/mkv, 
-video/x-m4v,video/*" onChange={changeVideo} />
-                        {/* <button type="submit">생성</button> */}
-                        <Button type='submit'> 생성하기 </Button>
+                            >
+                                {/* <video muted autoPlay loop id="video"></video> */}
+                                {/* {file.video && <video muted autoPlay loop src={file.url} />} */}
+                            </CardMedia>
+                        </Card>
 
-                    </form>
+                        <Card sx={[CardStyle, { ml: 0 }]}>
+                            <CardMedia
+                                sx={MediaStyle}
+                                component="img"
+                                alt={caption}
+                                src={gif}
 
-                    <Card sx={[CardStyle, { mt: 2 }]}>
-                        <CardMedia
-                            sx={MediaStyle}
-                            component="img"
-                            alt={caption}
-                            src={gif}
+                            // 샘플 GIF
+                            // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
+                            // image='../images/GifSample2.gif'
 
-                        // 샘플 GIF
-                        // image='https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif'
-                        // image='../images/GifSample2.gif'
+                            >
+                                {/* <img src="https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif" alt={caption} /> */}
+                            </CardMedia>
+                            {/* <div>{gif}{caption}</div> */}
+                            {/* <img src="../images/GifSample.gif"></img> */}
 
-                        >
-                            {/* <img src="https://penterest.s3.ap-northeast-2.amazonaws.com/gifs/sample.gif" alt={caption} /> */}
-                        </CardMedia>
-                        {/* <div>{gif}{caption}</div> */}
-                        {/* <img src="../images/GifSample.gif"></img> */}
-
-                    </Card>
+                        </Card>
+                    </Box>
 
                 </Box>
             </Modal>
