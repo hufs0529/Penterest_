@@ -1,19 +1,17 @@
 package com.example.LoginTest.config;
 
 
-import com.example.LoginTest.core.account.userCRUD.infrastructure.UserRepository;
+import com.example.LoginTest.application.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.example.LoginTest.config.jwt.JwtAuthenticationFilter;
-import com.example.LoginTest.config.jwt.JwtAuthorizationFilter;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 /**
@@ -32,40 +30,13 @@ import com.example.LoginTest.config.jwt.JwtAuthorizationFilter;
  */
 @Configuration
 @EnableWebSecurity
-
+@RequiredArgsConstructor
 public class SecurityConfig{
 
-    /**
-     * TODO : Read https://stir.tistory.com/266
-     * CSRF 공격과 방어 : https://junhyunny.github.io/information/security/spring-boot/spring-security/cross-site-reqeust-forgery/
-     * http.csrf.disable() : CSRF 공격에 대한 방어 해제코드
-     * antMatchers() : 특정 URL 접근시 인가가 필요한 URI 설정 가능
-     *
-     *
-     */
-    private final AuthenticationConfiguration authenticationConfiguration;
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    private  CorsConfig corsConfig;
-
-    // 생성자 기반 DI 주입
-
-
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, UserRepository userRepository, CorsConfig corsConfig) {
-        this.authenticationConfiguration = authenticationConfiguration;
-        this.userRepository = userRepository;
-        this.corsConfig = corsConfig;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+    @Value("${security.jwt.token.secretKey")
+    private String secretKey;
 
     /**
      *
@@ -88,25 +59,26 @@ public class SecurityConfig{
      *
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .addFilter(corsConfig.corsFilter())
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin().disable()
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .httpBasic().disable()
-
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                .formLogin().disable()
+                .csrf().disable()
+                .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/**")
-                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/v1/admin/**")
-                .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll()
-                .and().build();
+                .antMatchers("/api/v1/users/join","/api/v1/users/login").permitAll() // 누구나 사용가능
+                .antMatchers(HttpMethod.GET, "/api/v1/gifs/{gifId}", "/api/v1/gifs").permitAll() // Gif 읽기, 검색은 누구나 가능
+                .antMatchers(HttpMethod.POST , "/api/v1/gifs/**").authenticated() // 인증이 필요한 api-endpoint(경로) 설정
+                .antMatchers(HttpMethod.PUT, "/api/v1/gifs/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/gifs/**").authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt는 세션방식이아니라서 끄는 설정
+                .and()
+                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                // 추가시 403은 해결했으나 : token을 안넣었는데도 잘못 인가가 되고 있음. 예외처리 필요!
+                .build();
     }
-
 
 
 
