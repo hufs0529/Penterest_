@@ -2,7 +2,7 @@ logging:
   pattern:
     console: "[%d{MM:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
   level:
-    dev.bank : DEBUG
+    com.example : DEBUG
 
 #DB 연결
 spring:
@@ -16,12 +16,16 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
-      #      hibernate.hbm2ddl.auto: update
-#    open-in-view: true #https://gracelove91.tistory.com/100
-    properties:
-      hibernate:
-        format_sql: true
+#      ddl-auto: create
+            hibernate.hbm2ddl.auto: update
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  security:
+    jwt:
+      token:
+        secretKey: this.is.tempSecretKey.need.to.change #Todo : 소스코드에 남겨있으면 안됨 > Edit Configuration > environment variables
+                              #https://velog.io/@soyeon207/JWT-%EC%8B%A4%EC%8A%B5
+
+
+
