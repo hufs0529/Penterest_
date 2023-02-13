@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button, Stack, TextField } from '@mui/material';
 // import UploadModal from './UploadModalOriginal';
 import UploadModal from './UploadModal';
-// import './backupArchive/Nav.css'
 
 export default function Nav() {
     return (
@@ -63,11 +62,6 @@ export default function Nav() {
                         >
                             검색
                         </Button>
-                        <Button
-                            variant="text"
-                        >
-                            필터
-                        </Button>
                     </Stack>
                 </div>
                 <div>
@@ -87,7 +81,7 @@ export default function Nav() {
                         >
                             로그인
                         </Link>
-                        <Link
+                        {/* <Link
                             to="/Home"
                             style={{
                                 flexGrow: 0,
@@ -96,7 +90,7 @@ export default function Nav() {
                             }}
                         >
                             소개
-                        </Link>
+                        </Link> */}
                     </Stack>
                 </div>
                 <div

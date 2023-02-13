@@ -55,39 +55,11 @@ export default function GalleryMasonry() {
                         key={index}
                     >
                         <Label>{index + 1}</Label>
-                        {/* 1. 클릭시 단순 이미지 url 연결 */}
-                        {/* <MUILink href={item.img}>
-                            <img
-                                src={`${item.img}?w=162&auto=format`}
-                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                                alt={item.title}
-                                loading="lazy"
-                                style={{
-                                    borderBottomLeftRadius: 4,
-                                    borderBottomRightRadius: 4,
-                                    display: 'block',
-                                    width: '100%'
-                                }}
-                            />
-                        </MUILink> */}
-
-                        {/* 2. 클릭시 이미지 페이지 연결 */}
+                        {/* 클릭시 이미지 페이지 모달 연결 */}
                         <ImageDetail
                             item={item}
                             index={index}
                         />
-                        {/* <img
-                            src={`${item.img}?w=162&auto=format`}
-                            srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            loading="lazy"
-                            style={{
-                                borderBottomLeftRadius: 4,
-                                borderBottomRightRadius: 4,
-                                display: 'block',
-                                width: '100%'
-                            }}
-                        /> */}
                     </div>
                 ))}
             </Masonry>

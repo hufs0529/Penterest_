@@ -1,27 +1,7 @@
 import { useState } from 'react'
 import React from 'react';
-import { Box, Button, Card, CardMedia, Container, Modal, Typography } from '@mui/material';
-import { display } from '@mui/system';
-
-// const ImageDetail = (props) => {
-//     return (
-//         <>
-//             <img
-//                 src={`${props.item.img}?w=162&auto=format`}
-//                 srcSet={`${props.item.img}?w=162&auto=format&dpr=2 2x`}
-//                 alt={props.item.title}
-//                 loading="lazy"
-//                 style={{
-//                     borderBottomLeftRadius: 4,
-//                     borderBottomRightRadius: 4,
-//                     display: 'block',
-//                     width: '100%'
-//                 }}
-//             />
-
-//         </>
-//     )
-// }
+import { Box, Button, Card, Modal } from '@mui/material';
+import { saveAs } from 'file-saver';
 
 export default function ImageDetail(props) {
     const [open, setOpen] = useState(false);
@@ -35,34 +15,23 @@ export default function ImageDetail(props) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 'max-content',
-        maxWidth: '90%',
-        // maxWidth: '500px',
-        height: '90vh',
         bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        // overflow: 'contain'
+        border: '0px solid #000',
 
     };
 
     const CardStyle = {
-        // cover를 넣으니까 중앙정렬이 됨: 이유는 모르겠다
-        display: 'flex',
-        justifyContent: 'center',
         width: '100%',
-        height: '80vh',
-        // height: 'max-content',
+        height: 'fit-content',
         bgcolor: '#ddd',
         border: '1px sprite #000',
-        // overflow: 'contain'
-
     };
 
-    const MediaStyle = {
-        margin: 'auto'
-    };
-
+    //URL로부터 다운로드 받는 기능: 'file-saver' 패키지 다운로드 필요
+    const onDownload = () => {
+        //첫 번째 인수: 가져올 URL, 두 번째 인수: 저장이름 및 형식 
+        saveAs(`${props.item.img}`, `${props.item.img}.gif`);
+    }
 
 
     return (
@@ -90,17 +59,8 @@ export default function ImageDetail(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography> */}
 
                     <Card sx={[CardStyle, { mr: 0 }]}>
-                        {/* <CardMedia
-                        >
-                        </CardMedia> */}
                         <img
                             src={props.item.img}
                             srcSet={props.item.img}
@@ -110,13 +70,21 @@ export default function ImageDetail(props) {
                                 borderBottomLeftRadius: 4,
                                 borderBottomRightRadius: 4,
                                 display: 'block',
-                                // maxWidth: 'max-content',
-                                // height: 'inherit',
+                                width: '100%',
+                                height: '100%',
+                                maxWidth: '90vh',
+                                maxHeight: '90vh',
+                                objectFit: 'contain'
                             }}
                         />
                     </Card>
 
                     <Box>
+
+                        <Button onClick={onDownload}>
+                            저장
+                        </Button>
+
                         <Button onClick={handleClose}>
                             닫기
                         </Button>

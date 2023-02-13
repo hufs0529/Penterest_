@@ -115,10 +115,6 @@ export default function Login() {
                                 id="password"
                                 autoComplete="current-password"
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="자동 로그인"
-                            />
                             <Button
                                 type="submit"
                                 fullWidth

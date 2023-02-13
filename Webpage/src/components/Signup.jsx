@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -30,6 +31,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+
 export default function SignUp() {
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,6 +41,22 @@ export default function SignUp() {
             password: data.get('password'),
         });
     };
+
+    // 회원가입버튼 통제함수
+    // 규약동의버튼 핸들러
+    const [checked, setChecked] = useState(false);
+    const handleCheckChange = (event) => {
+        setChecked(event.target.checked)
+        if (checked === true) {
+            SetSignupBtnDisabled(true);
+        }
+        else {
+            SetSignupBtnDisabled(false);
+        };
+    };
+
+    // 버튼 통제 함수
+    const [signupBtnDisabled, SetSignupBtnDisabled] = useState(true);
 
     return (
         <Box sx={{
@@ -138,7 +156,13 @@ export default function SignUp() {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControlLabel
-                                        control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                        control={
+                                            <Checkbox
+                                                value="agreement"
+                                                color="primary"
+                                                checked={checked}
+                                                onChange={handleCheckChange}
+                                            />}
                                         label={"본 사이트 이용규약과 개인정보 취급정책에 동의합니다."}
                                     />
                                 </Grid>
@@ -147,6 +171,7 @@ export default function SignUp() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
+                                disabled={signupBtnDisabled}
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 회원가입하기!
