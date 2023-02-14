@@ -58,13 +58,23 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
         //UserName Token에서 꺼내기
-        String userName = JwtUtil.getUserName(token, secretKey);
-        log.info("userName : {}", userName);
+
+        // id를 UserName에서  Email로 변경하기
+//        String userName = JwtUtil.getUserName(token, secretKey);
+//        log.info("userName : {}", userName);
+
+        // 위 주석 코드에서 email로 변경하였음.
+        String email = JwtUtil.getEmailId(token, secretKey);
+        log.info("email : {}", email);
+
+
+
 
 
         //권한 부여
+        // 첫번째 파라미터 userName > email
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("USER")));
+                new UsernamePasswordAuthenticationToken(email, null, List.of(new SimpleGrantedAuthority("USER")));
 
         // Detail 정보 입력 부분
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

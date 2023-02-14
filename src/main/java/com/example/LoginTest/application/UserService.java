@@ -38,6 +38,13 @@ public class UserService {
                     log.info("ExceptionManager.runtimeExceptionHandler() 실행");
                     throw new AppException(ErrorCode.USERNAME_DUPLICATED, joinDto.getUserName() + "는 이미 존재하는 usserName 입니다.");
                 });
+
+        userRepository.findByEmail(joinDto.getEmailAddress())
+                .ifPresent(user -> {
+                    log.info("ExceptionManager.runtimeExceptionHandler() 실행");
+                    throw new AppException(ErrorCode.EMAIL_NOT_FOUND, joinDto.getEmailAddress() + "는 이미 존재하는 email 입니다.");
+                });
+
         // DB에 저장할때는 Entity를 이용해서
         User user = User.builder()
                 .username(joinDto.getUserName())
@@ -50,10 +57,11 @@ public class UserService {
         return "SUCCESS";
     }
 
-    public String login(String userName, String password) {
+    // Todo : findByUsername > findByEmail로 변경하여서 해당하는 파라미터들은 변경되었음.
+    public String login(String emailAddress, String password) {
         // userName 없음;
-        User selectedUser = userRepository.findByUsername(userName)
-                .orElseThrow(() ->new AppException(ErrorCode.USERNAME_NOT_FOUND, userName + "이 없습니다."));
+        User selectedUser = userRepository.findByEmail(emailAddress)
+                .orElseThrow(() ->new AppException(ErrorCode.EMAIL_NOT_FOUND , emailAddress + "이 없습니다."));
 
         // password 오류;
         if(!passwordEncoder.matches(password, selectedUser.getPassword())){
@@ -61,7 +69,7 @@ public class UserService {
 
         }
 
-        String token = JwtUtil.createToken(selectedUser.getUsername(),secretKey, expiredTimeMs);
+        String token = JwtUtil.createToken(selectedUser.getEmail(),secretKey, expiredTimeMs);
 
         // 위 Exception 발생안하면 토큰 생성
         return token;

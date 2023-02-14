@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 @Api(tags = "User join & Login API")
 @Slf4j
+@CrossOrigin(value = "*")
 public class UserController {
 
     private final UserService userService;
@@ -34,10 +35,9 @@ public class UserController {
 
     }
 
-
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginReqeustDto dto) {
-        String token = userService.login(dto.getUserName(), dto.getPassword());
+    public ResponseEntity<String> login(@RequestBody UserLoginReqeustDto loginReqeustDto) {
+        String token = userService.login(loginReqeustDto.getEmailAddress(), loginReqeustDto.getPassword());
         return ResponseEntity.ok().body(token);
     }
 

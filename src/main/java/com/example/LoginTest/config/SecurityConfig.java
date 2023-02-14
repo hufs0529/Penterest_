@@ -64,7 +64,7 @@ public class SecurityConfig{
                 .httpBasic().disable()
                 .formLogin().disable()
                 .csrf().disable()
-                .cors().disable()
+                .cors().and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/users/join","/api/v1/users/login").permitAll() // 누구나 사용가능
                 .antMatchers(HttpMethod.GET, "/api/v1/gifs/{gifId}", "/api/v1/gifs").permitAll() // Gif 읽기, 검색은 누구나 가능
