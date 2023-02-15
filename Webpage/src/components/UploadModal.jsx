@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import * as React from 'react';
-import { Box, Button, Card, Modal, FormControl, FormLabel, ButtonGroup, Slider } from '@mui/material';
+import { Box, Button, Card, Modal, FormControl, FormLabel, ButtonGroup, Slider, Tooltip } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import UploadModalPreview from './UploadModalPreview';
 import UploadModalConverted from './UploadModalConverted';
@@ -235,10 +235,12 @@ export default function UploadModal() {
                 }}
             >
                 {/* 이미지 업로드 */}
-                <AddAPhotoIcon
-                    color='action'
-                    fontSize='large'
-                />
+                <Tooltip title="이미지 업로드">
+                    <AddAPhotoIcon
+                        color='action'
+                        fontSize='large'
+                    />
+                </Tooltip>
             </Button>
             <Modal
                 open={open}

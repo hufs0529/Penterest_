@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import * as React from 'react';
-import { Divider, IconButton, InputBase, Paper } from '@mui/material';
+import { Divider, IconButton, InputBase, Paper, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import UploadModal from './UploadModal';
 
 // 기존 기능 복구시 활성화
@@ -66,6 +67,7 @@ export default function Nav(props) {
 
                 <UploadModal />
 
+
                 <div style={{
                     flexGrow: 1,
                     minWidth: '200px',
@@ -82,14 +84,16 @@ export default function Nav(props) {
                             inputProps={{ 'aria-label': '원하시는 움짤을 검색해보세요' }}
                             onKeyDown={handleSearchTermChange}
                         />
-                        <IconButton
-                            type="button"
-                            sx={{ p: '10px' }}
-                            aria-label="search"
-                            onClick={handleSearchTermChange}
-                        >
-                            <SearchIcon />
-                        </IconButton>
+                        <Tooltip title="검색실행">
+                            <IconButton
+                                type="button"
+                                sx={{ p: '10px' }}
+                                aria-label="search"
+                                onClick={handleSearchTermChange}
+                            >
+                                <SearchIcon />
+                            </IconButton>
+                        </Tooltip>
                         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                     </Paper>
 
@@ -128,17 +132,22 @@ export default function Nav(props) {
                     flexShrink: 0,
                     flexbasis: 'auto',
                 }}>
-
-                    <Link
-                        to="/Login"
-                        style={{
-                            marginLeft: "5px",
-                            marginRight: "10px",
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        로그인
-                    </Link>
+                    <Tooltip title="로그인">
+                        <Link
+                            to="/Login"
+                            style={{
+                                marginLeft: "5px",
+                                marginRight: "10px",
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            {/* 로그인 */}
+                            <AccountCircleIcon
+                                color='action'
+                                fontSize='large'
+                            />
+                        </Link>
+                    </Tooltip>
 
                 </div>
                 {/*  메뉴 서랍용 버튼: 불필요하면 버리기 */}
