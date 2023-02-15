@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 @Api(tags = "User join & Login API")
 @Slf4j
-@CrossOrigin(value = "*")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -73,5 +73,5 @@ public class UserController {
         log.info("-- @RequestParam Gif: {}", deleteUserId);
         return userService.removeUser(deleteUserId);
     }
-    
+
 }
