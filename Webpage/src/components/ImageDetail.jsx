@@ -16,7 +16,7 @@ export default function ImageDetail(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
-        border: '0px solid #000',
+        border: '0px transparent #000',
         borderRadius: '4px',
 
     };

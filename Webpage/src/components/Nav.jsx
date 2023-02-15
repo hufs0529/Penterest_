@@ -1,10 +1,29 @@
 import { Link } from "react-router-dom";
 import * as React from 'react';
-import { Button, Stack, TextField } from '@mui/material';
-// import UploadModal from './UploadModalOriginal';
+import { Divider, IconButton, InputBase, Paper } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import UploadModal from './UploadModal';
 
-export default function Nav() {
+// 기존 기능 복구시 활성화
+// import { Button, Stack, TextField } from '@mui/material';
+
+export default function Nav(props) {
+
+    const handleSearchTermChange = (event) => {
+        if (event.key === 'Enter') {
+            //this.setState({ searchTerm: event.target.value });
+            props.setValue(event.target.value);
+        }
+    };
+
+    // const handleSearchTermChangeOnclick = (event) => {
+    //     if (event.onClick === 'Enter') {
+    //         //this.setState({ searchTerm: event.target.value });
+    //         props.setValue(event.target.value);
+    //     }
+    // };
+
+
     return (
         <>
             <header
@@ -24,8 +43,8 @@ export default function Nav() {
             >
                 <div className="nav logo"
                     style={{
-                        width: '70px',
-                        height: '70px',
+                        width: '50px',
+                        height: '50px',
                         marginLeft: '10px',
                         borderRadius: '15px',
                         overflow: 'hidden',
@@ -37,7 +56,7 @@ export default function Nav() {
                         style={{
                             marginTop: '4px',
                             transform: 'scale(1.8)',
-                            width: '70px',
+                            width: '50px',
                             height: '70px',
                             backgroundSize: "cover",
                             backgroundImage: `url(../images/logo.png)`,
@@ -49,20 +68,60 @@ export default function Nav() {
 
                 <div style={{
                     flexGrow: 1,
-                    minWidth: '400px',
+                    minWidth: '200px',
                 }}>
+                    <Paper
+                        component="form"
+                        variant="outlined"
+                        sx={{ p: '2px 4px', mr: 1, display: 'flex', alignItems: 'center' }}
+                    >
+                        <InputBase
+                            fullWidth
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder="원하시는 움짤을 검색해보세요"
+                            inputProps={{ 'aria-label': '원하시는 움짤을 검색해보세요' }}
+                            onKeyDown={handleSearchTermChange}
+                        />
+                        <IconButton
+                            type="button"
+                            sx={{ p: '10px' }}
+                            aria-label="search"
+                            onClick={handleSearchTermChange}
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                    </Paper>
 
-                    <Stack spacing={1} direction="row" sx={{ mt: "6px" }}>
-                        {/* <input className="temp" type="text" /> */}
-                        <TextField fullWidth id="searchBox" label="검색" variant="outlined" />
+                    {/* 검색 보존용 코드 */}
+                    {/* <Stack
+                        spacing={0}
+                        direction="row"
+                        sx={{ mt: "6px" }}>
+                        <TextField
+                            // InputLabelProps="원하시는 움짤을 검색해보세요"
+                            fullWidth
+                            id="searchBox"
+                            placeholder="원하시는 움짤을 검색해보세요"
+                            variant="outlined"
+                            onKeyDown={handleSearchTermChange}
+                            size="small"
+                            sx={{
+                                // height: "10px"
+                            }}
+                        />
                         <Button
                             variant="text"
-                            href="https://google.com"
+                            onClick={handleSearchTermChange}
                             style={{ ml: 1, fontWeight: "bold" }}
                         >
-                            검색
+                            <SearchIcon
+                                color="action"
+                                sx={{ fontSize: 30 }}
+                            />
                         </Button>
-                    </Stack>
+                    </Stack> */}
+
                 </div>
                 <div style={{
                     flexGrow: 0,
@@ -74,7 +133,7 @@ export default function Nav() {
                         to="/Login"
                         style={{
                             marginLeft: "5px",
-                            marginRight: "5px",
+                            marginRight: "10px",
                             fontWeight: 'bold',
                         }}
                     >
@@ -82,8 +141,8 @@ export default function Nav() {
                     </Link>
 
                 </div>
-                {/* 600px 이하시 나오는 메뉴뷰: 구현중... */}
-                <div
+                {/*  메뉴 서랍용 버튼: 불필요하면 버리기 */}
+                {/* <div
                     style={{
                         marginLeft: '10px',
                         marginRight: '10px',
@@ -93,7 +152,7 @@ export default function Nav() {
                         flexShrink: 0,
                         flexbasis: 'auto'
                     }}>
-                    {/* <a href="#">
+                <a href="#">
                         <p
                             style={{
                                 background: 'black',
@@ -106,8 +165,8 @@ export default function Nav() {
                                 textAlign: 'center',
                                 lineHeight: '60px'
                             }}>메뉴</p>
-                    </a> */}
-                </div>
+                    </a>
+                </div> */}
             </header>
 
 

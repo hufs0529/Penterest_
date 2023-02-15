@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import * as React from 'react';
 import { Box, Button, Card, Modal, FormControl, FormLabel, ButtonGroup, Slider } from '@mui/material';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import UploadModalPreview from './UploadModalPreview';
 import UploadModalConverted from './UploadModalConverted';
 import { saveAs } from 'file-saver';
@@ -23,6 +24,19 @@ export default function UploadModal() {
     const [gif, setGif] = useState("");
     const [caption, setCaption] = useState("");
     const [fileChanged, setFileChanged] = useState(false);
+    const [gifSpeed, setGifSpeed] = useState(true);
+
+    useEffect(() => {
+        if (fastButtonVariant === 'contained' && slowButtonVariant === 'outlined') {
+            setGifSpeed(true);
+        }
+        else if (fastButtonVariant === 'outlined' && slowButtonVariant === 'contained') {
+            setGifSpeed(false);
+        }
+        else {
+            setGifSpeed(true);
+        }
+    })
 
 
     // 
@@ -48,6 +62,9 @@ export default function UploadModal() {
         e.preventDefault();
         const formData = new FormData();
         formData.append("file", video);
+        formData.append("start", time[0]);
+        formData.append("end", time[1]);
+        formData.append("speed", gifSpeed);
         console.log(video);
 
         if (fileChanged) {
@@ -63,16 +80,41 @@ export default function UploadModal() {
             axios
                 .post("http://localhost:5000/upload", formData, config)
                 .then(res => {
-                    setGif(res.data[0]);
-                    setCaption(res.data[1]);
+                    setGif(res.data[1]);
+                    setCaption(res.data[0]);
                 })
             console.log(gif);
             console.log(caption);
         }
-
-
     }
 
+    const submitData = e => {
+        e.preventDefault();
+        const createdDate = new Date();
+        const id = 0;
+
+        const JsonForDB = {
+            caption: caption,
+            gifUrl: gif,
+            createdDate: createdDate,
+            id: id,
+        };
+
+        const config = {
+            "Content-Type": "application/json",
+            withCredentials: true,
+        };
+        axios
+            .post("http://localhost:8080/api/gifs", JsonForDB, config)
+            .then((res) => {
+                alert("성공");
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log("실패");
+                console.log(error);
+            });
+    };
 
     // 이미지 저장 함수
     //URL로부터 다운로드 받는 기능: 'file-saver' 패키지 다운로드 필요
@@ -107,16 +149,24 @@ export default function UploadModal() {
     }
 
     // 시간지정 관련 함수
-    const duration = 3600; // 영상넓이 지정 함수. 단위: 초
-    const [position, setPosition] = React.useState([0, duration]);
+    // 1. 동영상 길이에서 지정하기
+    // const duration = 3600; // 영상넓이 지정 함수. 단위: 초
+    // const [position, setPosition] = React.useState([0, duration]);
 
-    function formatDuration(value) {
-        const minute = Math.floor(value / 60);
-        const second = value - minute * 60;
-        return `${minute}:${second < 10 ? `0${second}` : second}`;
-    }
+    // function formatDuration(value) {
+    //     const minute = Math.floor(value / 60);
+    //     const second = value - minute * 60;
+    //     return `${minute}:${second < 10 ? `0${second}` : second}`;
+    // }
+    // const handleTimeChange = (event, newValue) => { setPosition(newValue); };
 
-    const handleTimeChange = (event, newValue) => { setPosition(newValue); };
+    // 2. GIF 총 길이로 지정하기
+    const [time, setTime] = React.useState([0, 5]);
+
+    const handleTimeChange = (event, newTime) => {
+        setTime(newTime);
+    };
+
 
     // 보여주기창-GIF생성창 전환 함수
     // Preview 스위치
@@ -172,10 +222,6 @@ export default function UploadModal() {
         mt: 2
     };
 
-    const MediaStyle = {
-        margin: 'auto'
-    };
-
     return (
         <>
             <Button
@@ -188,7 +234,11 @@ export default function UploadModal() {
                     fontWeight: "bold"
                 }}
             >
-                추가하기
+                {/* 이미지 업로드 */}
+                <AddAPhotoIcon
+                    color='action'
+                    fontSize='large'
+                />
             </Button>
             <Modal
                 open={open}
@@ -216,7 +266,7 @@ export default function UploadModal() {
                                     style={{ width: '70%', display: 'none' }}
                                 />
                                 <Button>
-                                    <label htmlfor="file">
+                                    <label for="file">
                                         파일선택
                                     </label>
                                 </Button>
@@ -230,7 +280,12 @@ export default function UploadModal() {
                         </form>
                         <ButtonGroup disabled={rightButtons}>
                             {/* <ButtonGroup> */}
-                            <Button> 전송하기 </Button>
+                            <Button type="submit">
+                                {/* 전송하기 기능이 안 될 경우 form태그 위치 확인할 것*/}
+                                <form onSubmit={submitData}>
+                                    전송하기
+                                </form>
+                            </Button>
                             <Button onClick={onDownload}> 저장하기 </Button>
                         </ButtonGroup>
                     </Box>
@@ -256,7 +311,8 @@ export default function UploadModal() {
                         <FormControl sx={{ width: '68%' }}>
                             <FormLabel id="demo-controlled-radio-buttons-group">
                                 시간지정
-                                <span
+                                {/* 1번 함수 적용시 활성화 */}
+                                {/* <span
                                     style={{
                                         color: 'black',
                                         fontWeight: 'bolder',
@@ -264,9 +320,10 @@ export default function UploadModal() {
                                     }}
                                 >
                                     {formatDuration(position[0])} ~ {formatDuration(position[1])}
-                                </span>
+                                </span> */}
                             </FormLabel>
-                            <Slider
+                            {/* 1번 함수 */}
+                            {/* <Slider
                                 getAriaLabel={() => 'Time range'}
                                 value={position}
                                 onChange={handleTimeChange}
@@ -276,6 +333,21 @@ export default function UploadModal() {
                                 step={1}
                                 max={duration}
                                 disableSwap
+                            /> */}
+
+                            {/* 2번 함수 */}
+                            <Slider
+                                getAriaLabel={() => 'Time range'}
+                                value={time}
+                                onChange={handleTimeChange}
+                                valueLabelDisplay="auto"
+                                // getAriaValueText={timestamp}
+                                min={0}
+                                max={10}
+                            // min={0}
+                            // step={1}
+                            // max={30}
+                            // scale={calculateTime}
                             />
                         </FormControl>
                     </Box>
