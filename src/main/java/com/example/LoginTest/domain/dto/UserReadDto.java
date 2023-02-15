@@ -18,7 +18,6 @@ public class UserReadDto {
     private String phoneNumber;
     private LocalDateTime createDate;
 
-
     @Builder
     public UserReadDto(String userName, String emailAddress, String phoneNumber, LocalDateTime createDate) {
         this.userName = userName;
@@ -30,7 +29,7 @@ public class UserReadDto {
     public User toEntity() {
         return User.builder()
                 .username(userName)
-                .email(emailAddress)
+                .emailAddress(emailAddress)
                 .phoneNumber(phoneNumber)
                 .createDate(createDate).build();
 
