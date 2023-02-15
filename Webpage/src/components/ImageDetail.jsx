@@ -17,6 +17,7 @@ export default function ImageDetail(props) {
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
         border: '0px solid #000',
+        borderRadius: '4px',
 
     };
 
@@ -25,12 +26,14 @@ export default function ImageDetail(props) {
         height: 'fit-content',
         bgcolor: '#ddd',
         border: '1px sprite #000',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     };
 
     //URL로부터 다운로드 받는 기능: 'file-saver' 패키지 다운로드 필요
     const onDownload = () => {
         //첫 번째 인수: 가져올 URL, 두 번째 인수: 저장이름 및 형식 
-        saveAs(`${props.item.img}`, `${props.item.img}.gif`);
+        saveAs(`${props.item.img}`, `${props.index}.gif`);
     }
 
 
@@ -43,8 +46,7 @@ export default function ImageDetail(props) {
                 alt={props.item.title}
                 loading="lazy"
                 style={{
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
+                    borderRadius: 4,
                     display: 'block',
                     width: '100%',
                 }}
@@ -67,8 +69,6 @@ export default function ImageDetail(props) {
                             alt={props.item.title}
                             loading="lazy"
                             style={{
-                                borderBottomLeftRadius: 4,
-                                borderBottomRightRadius: 4,
                                 display: 'block',
                                 width: '100%',
                                 height: '100%',
@@ -79,13 +79,35 @@ export default function ImageDetail(props) {
                         />
                     </Card>
 
-                    <Box>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}>
 
-                        <Button onClick={onDownload}>
+                        <Button
+                            variant='text'
+                            onClick={onDownload}
+                            sx={{
+                                borderTopleftRadius: 0,
+                                '&:hover': {
+                                    fontWeight: 'bold',
+                                },
+                            }}>
                             저장
                         </Button>
 
-                        <Button onClick={handleClose}>
+                        <Button
+                            variant='text'
+                            onClick={handleClose}
+                            sx={{
+                                fontWeight: 'bold',
+                                borderTopRightRadius: 0,
+                                '&:hover': {
+                                    color: '#fff',
+                                    backgroundColor: '#222',
+                                },
+                            }}>
                             닫기
                         </Button>
                     </Box>

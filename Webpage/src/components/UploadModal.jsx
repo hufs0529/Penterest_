@@ -1,34 +1,15 @@
 import { useState } from 'react'
 import * as React from 'react';
-import { Box, Button, Card, CardMedia, Modal, Typography, CircularProgress, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, ButtonGroup, Slider } from '@mui/material';
-import ConvertModal from './ConvertModal';
+import { Box, Button, Card, Modal, FormControl, FormLabel, ButtonGroup, Slider } from '@mui/material';
 import UploadModalPreview from './UploadModalPreview';
 import UploadModalConverted from './UploadModalConverted';
 import { saveAs } from 'file-saver';
 import axios from "axios";
 
 // 시간지정 관련 전역함수 및 변수
-function timestamp(value) {
-    return `${value}`;
-}
-// 시간지정 슬라이더바 설정
-// function valueLabelFormat(value) {
-//     const units = ['KB', 'MB', 'GB', 'TB'];
-
-//     let unitIndex = 0;
-//     let scaledValue = value;
-
-//     while (scaledValue >= 1024 && unitIndex < units.length - 1) {
-//       unitIndex += 1;
-//       scaledValue /= 1024;
-//     }
-
-//     return `${scaledValue} ${units[unitIndex]}`;
-//   }
-
-//   function calculateValue(value) {
-//     return 2 ** value;
-//   }
+// function timestamp(position) {
+//     return `${position}`;
+// }
 
 export default function UploadModal() {
 
@@ -92,6 +73,7 @@ export default function UploadModal() {
 
     }
 
+
     // 이미지 저장 함수
     //URL로부터 다운로드 받는 기능: 'file-saver' 패키지 다운로드 필요
     const onDownload = () => {
@@ -125,11 +107,16 @@ export default function UploadModal() {
     }
 
     // 시간지정 관련 함수
-    const [value, setValue] = React.useState([20, 37]);
+    const duration = 3600; // 영상넓이 지정 함수. 단위: 초
+    const [position, setPosition] = React.useState([0, duration]);
 
-    const handleTimeChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    function formatDuration(value) {
+        const minute = Math.floor(value / 60);
+        const second = value - minute * 60;
+        return `${minute}:${second < 10 ? `0${second}` : second}`;
+    }
+
+    const handleTimeChange = (event, newValue) => { setPosition(newValue); };
 
     // 보여주기창-GIF생성창 전환 함수
     // Preview 스위치
@@ -137,6 +124,16 @@ export default function UploadModal() {
 
     const handlePreview = event => {
         setPreviewShown(false);
+    }
+
+    // 스프링전송, 저장하기 컨트롤 함수
+    const [rightButtons, setRightButtons] = useState(true);
+    const handlerightButtons = () => {
+        if (previewShown === true) {
+            setRightButtons(false);
+        } else {
+            setRightButtons(true);
+        }
     }
 
     // 모달창 모듈
@@ -161,11 +158,6 @@ export default function UploadModal() {
         boxShadow: 24,
         p: 2,
         borderRadius: '20px',
-
-        // 임시 저장용 수치: 완성본에서는 지울 것
-        // display: 'flex',
-        // width: '100%',
-        // justifyContent: 'space-between',
     };
 
     const CardStyle = {
@@ -187,9 +179,13 @@ export default function UploadModal() {
     return (
         <>
             <Button
+                variant='text'
                 onClick={handleOpen}
                 style={{
                     flex: '0 0 auto',
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    fontWeight: "bold"
                 }}
             >
                 추가하기
@@ -201,39 +197,44 @@ export default function UploadModal() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Text in a modal
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                            </Typography> */}
-
-
-                    <form onSubmit={submitVideo} encType="multipart/form-data">
-                        <Button>
-                            <ConvertModal
-                                gif={gif}
-                                caption={caption}
-                                changeVideo={changeVideo}
-                                submitVideo={submitVideo}
-                                file={file}
-
-                            />
-                        </Button>
-
-                        <input id="file" type="file" accept="video/mp4,video/mkv, 
-video/x-m4v,video/*" onChange={changeVideo} />
-                        {/* <button type="submit">생성</button> */}
-                        <Button
-                            type='submit'
-                            onClick={handlePreview}
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        mb: '10px'
+                    }}>
+                        <form
+                            onSubmit={submitVideo}
+                            encType="multipart/form-data"
+                            style={{ width: '50%' }}
                         >
-                            생성하기
-                        </Button>
-                        <Button> 전송하기 </Button>
-                        <Button onClick={onDownload}> 저장하기 </Button>
+                            <ButtonGroup>
+                                <input
+                                    id="file"
+                                    type="file"
+                                    accept="video/mp4,video/mkv, video/x-m4v,video/*"
+                                    onChange={changeVideo}
+                                    style={{ width: '70%', display: 'none' }}
+                                />
+                                <Button>
+                                    <label htmlfor="file">
+                                        파일선택
+                                    </label>
+                                </Button>
+                                <Button
+                                    type='submit'
+                                    onClick={() => { handlePreview(); handlerightButtons(); }}
+                                >
+                                    생성하기
+                                </Button>
+                            </ButtonGroup>
+                        </form>
+                        <ButtonGroup disabled={rightButtons}>
+                            {/* <ButtonGroup> */}
+                            <Button> 전송하기 </Button>
+                            <Button onClick={onDownload}> 저장하기 </Button>
+                        </ButtonGroup>
+                    </Box>
 
-                    </form>
                     <Box>
                         <FormControl sx={{ width: '30%' }}>
                             <FormLabel id="play-speed-buttons-group"> 재생속도 </FormLabel>
@@ -252,18 +253,29 @@ video/x-m4v,video/*" onChange={changeVideo} />
                                 </Button>
                             </ButtonGroup>
                         </FormControl>
-                        <FormControl sx={{ width: '70%' }}>
-                            <FormLabel id="demo-controlled-radio-buttons-group"> 시간지정 </FormLabel>
+                        <FormControl sx={{ width: '68%' }}>
+                            <FormLabel id="demo-controlled-radio-buttons-group">
+                                시간지정
+                                <span
+                                    style={{
+                                        color: 'black',
+                                        fontWeight: 'bolder',
+                                        marginLeft: '10px'
+                                    }}
+                                >
+                                    {formatDuration(position[0])} ~ {formatDuration(position[1])}
+                                </span>
+                            </FormLabel>
                             <Slider
                                 getAriaLabel={() => 'Time range'}
-                                value={value}
+                                value={position}
                                 onChange={handleTimeChange}
-                                valueLabelDisplay="auto"
-                                getAriaValueText={timestamp}
-                            // min={0}
-                            // step={1}
-                            // max={30}
-                            // scale={calculateTime}
+                                valueLabelDisplay="off"
+                                // getAriaValueText={timestamp}
+                                min={0}
+                                step={1}
+                                max={duration}
+                                disableSwap
                             />
                         </FormControl>
                     </Box>

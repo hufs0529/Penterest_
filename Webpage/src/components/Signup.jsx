@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import '@fontsource/roboto/300.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -92,7 +93,14 @@ export default function SignUp() {
                             marginLeft: 1
                         }}
                     >
-                        <Link to="/"> 메인페이지 </Link>
+                        <Link to="/">
+                            <ArrowBackIosIcon
+                                sx={{ display: 'inline-block', verticalAlign: 'middle' }}
+                            />
+                            <Typography sx={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                                메인페이지
+                            </Typography>
+                        </Link>
                     </Box>
                     <Box
                         sx={{

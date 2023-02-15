@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useState } from 'react'
 import * as React from 'react';
 import { Button, Stack, TextField } from '@mui/material';
 // import UploadModal from './UploadModalOriginal';
@@ -21,7 +20,8 @@ export default function Nav() {
                     flex: '1 1 auto',
                     justifycontent: 'space-between',
                     alignItems: 'center'
-                }}>
+                }}
+            >
                 <div className="nav logo"
                     style={{
                         width: '70px',
@@ -52,47 +52,37 @@ export default function Nav() {
                     minWidth: '400px',
                 }}>
 
-                    <Stack spacing={1} direction="row">
+                    <Stack spacing={1} direction="row" sx={{ mt: "6px" }}>
                         {/* <input className="temp" type="text" /> */}
                         <TextField fullWidth id="searchBox" label="검색" variant="outlined" />
                         <Button
-                            variant="contained"
+                            variant="text"
                             href="https://google.com"
-                            style={{ ml: 1 }}
+                            style={{ ml: 1, fontWeight: "bold" }}
                         >
                             검색
                         </Button>
                     </Stack>
                 </div>
-                <div>
-                </div>
-                <div>
-                    <Stack
-                        spacing={1}
-                        direction="row"
+                <div style={{
+                    flexGrow: 0,
+                    flexShrink: 0,
+                    flexbasis: 'auto',
+                }}>
+
+                    <Link
+                        to="/Login"
+                        style={{
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                            fontWeight: 'bold',
+                        }}
                     >
-                        <Link
-                            to="/Login"
-                            style={{
-                                flexGrow: 0,
-                                flexShrink: 0,
-                                flexbasis: 'auto'
-                            }}
-                        >
-                            로그인
-                        </Link>
-                        {/* <Link
-                            to="/Home"
-                            style={{
-                                flexGrow: 0,
-                                flexShrink: 0,
-                                flexbasis: 'auto'
-                            }}
-                        >
-                            소개
-                        </Link> */}
-                    </Stack>
+                        로그인
+                    </Link>
+
                 </div>
+                {/* 600px 이하시 나오는 메뉴뷰: 구현중... */}
                 <div
                     style={{
                         marginLeft: '10px',
@@ -103,8 +93,7 @@ export default function Nav() {
                         flexShrink: 0,
                         flexbasis: 'auto'
                     }}>
-                    {/* a태그 교체하고 프로필 사진 올라가게 할 것 */}
-                    <a href="#">
+                    {/* <a href="#">
                         <p
                             style={{
                                 background: 'black',
@@ -116,8 +105,8 @@ export default function Nav() {
                                 fontsize: '15px',
                                 textAlign: 'center',
                                 lineHeight: '60px'
-                            }}>프로필</p>
-                    </a>
+                            }}>메뉴</p>
+                    </a> */}
                 </div>
             </header>
 

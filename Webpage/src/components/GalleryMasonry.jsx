@@ -54,7 +54,9 @@ export default function GalleryMasonry() {
                     <div
                         key={index}
                     >
-                        <Label>{index + 1}</Label>
+                        {/* 이미지 순서 확인용 라벨-관리용 */}
+                        {/* <Label>{index + 1}</Label> */}
+
                         {/* 클릭시 이미지 페이지 모달 연결 */}
                         <ImageDetail
                             item={item}
