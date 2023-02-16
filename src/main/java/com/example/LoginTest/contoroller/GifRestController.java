@@ -67,6 +67,7 @@ public class GifRestController {
     }
 
 
+
     @DeleteMapping("/{id}")
     public List<GifBoard> deleteGif(@RequestParam("id") Long deleteGifID) {
         // @RequestParam("쿼리스트링에서 사용할 변수명") String id(Java에서 쿼리스트링을 통해 받았을 때 사용할 지역 변수 이름)
