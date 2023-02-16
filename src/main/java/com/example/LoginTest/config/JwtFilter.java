@@ -59,15 +59,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         //UserName Token에서 꺼내기
 
-        // id를 UserName에서  Email로 변경하기
-//        String userName = JwtUtil.getUserName(token, secretKey);
-//        log.info("userName : {}", userName);
-
         // 위 주석 코드에서 email로 변경하였음.
         String email = JwtUtil.getEmailId(token, secretKey);
         log.info("email : {}", email);
-
-
 
 
 

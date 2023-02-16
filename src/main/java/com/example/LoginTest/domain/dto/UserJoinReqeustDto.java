@@ -9,10 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 public class UserJoinReqeustDto {
     private String userName; // id 값을 email로 변경하기 !
-    private String password;
     private String emailAddress;
     private String phoneNumber;
+    private String password;
     private LocalDateTime createDate;
-
-
 }

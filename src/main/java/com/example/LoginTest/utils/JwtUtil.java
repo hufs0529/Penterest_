@@ -9,18 +9,15 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    public static String getUserName(String token, String secretKey) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
-                .getBody().get("userName", String.class);
-    }
+//    public static String getUserName(String token, String secretKey) {
+//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+//                .getBody().get("userName", String.class);
+//    }
 
     public static String getEmailId(String token, String secretKey) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
-                .getBody().get("email", String.class);
+                .getBody().get("emailAddress", String.class);
     }
-
-
-
 
 
     public static boolean isExpired(String token, String secretKey) {
@@ -29,9 +26,9 @@ public class JwtUtil {
     }
 
     // pram changed : userName > email
-    public static String createToken(String  email, String secretKey, long expireTimeMs) {
+    public static String createToken(String  emailAddress, String secretKey, long expireTimeMs) {
         Claims claims = Jwts.claims(); // Map의 일종 : 넣고 싶은정보 clasims.put() 이용해서 넣으면됨
-        claims.put("email", email); // 원래는 String userName을 첫번째 파라미터로 받고, 바로 넣었음.
+        claims.put("emailAddress", emailAddress); // 원래는 String userName을 첫번째 파라미터로 받고, 바로 넣었음.
 //        claims.put("phoneNumber",dto.getPhoneNumber());
 //        claims.put("emailAddress",dto.getEmailAddress());
 

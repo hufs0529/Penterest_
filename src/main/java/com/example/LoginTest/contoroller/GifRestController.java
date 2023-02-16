@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController // Java Object > JSON
 @RequestMapping("/api/v1/gifs")
-@CrossOrigin(value = "*")
+@CrossOrigin("*")
 @Api(tags = "GIF API")
 @Slf4j
 public class GifRestController {

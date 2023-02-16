@@ -76,7 +76,6 @@ public class SecurityConfig{
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt는 세션방식이아니라서 끄는 설정
                 .and()
                 .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
-                // 추가시 403은 해결했으나 : token을 안넣었는데도 잘못 인가가 되고 있음. 예외처리 필요!
                 .build();
     }
 

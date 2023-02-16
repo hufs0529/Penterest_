@@ -30,7 +30,7 @@ public class UserReadDto {
     public User toEntity() {
         return User.builder()
                 .username(userName)
-                .email(emailAddress)
+                .emailAddress(emailAddress)
                 .phoneNumber(phoneNumber)
                 .createDate(createDate).build();
 
