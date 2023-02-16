@@ -18,7 +18,6 @@ public class UserReadDto {
     private String phoneNumber;
     private LocalDateTime createDate;
 
-
     @Builder
     public UserReadDto(String userName, String emailAddress, String phoneNumber, LocalDateTime createDate) {
         this.userName = userName;
