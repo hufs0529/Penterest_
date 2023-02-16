@@ -29,9 +29,9 @@ public class JwtUtil {
     }
 
     // pram changed : userName > email
-    public static String createToken(String  email, String secretKey, long expireTimeMs) {
+    public static String createToken(String emailAddress, String secretKey, long expireTimeMs) {
         Claims claims = Jwts.claims(); // Map의 일종 : 넣고 싶은정보 clasims.put() 이용해서 넣으면됨
-        claims.put("email", email); // 원래는 String userName을 첫번째 파라미터로 받고, 바로 넣었음.
+        claims.put("emailAddress", emailAddress); // 원래는 String userName을 첫번째 파라미터로 받고, 바로 넣었음.
 //        claims.put("phoneNumber",dto.getPhoneNumber());
 //        claims.put("emailAddress",dto.getEmailAddress());
 
@@ -42,7 +42,6 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, secretKey) // key를 이용해서 Claims로 전달받은 정보를 암호화함
                 // Todo : key값을 외부에 공개하지 않는 방법 필요해 보임
                 .compact();
-
     }
 
 
