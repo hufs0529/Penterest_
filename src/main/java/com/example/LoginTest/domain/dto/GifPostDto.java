@@ -1,6 +1,7 @@
 package com.example.LoginTest.domain.dto;
 
 import com.example.LoginTest.domain.GifBoard;
+import com.example.LoginTest.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

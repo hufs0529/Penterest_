@@ -27,15 +27,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
     @Column(nullable = false)
-    private String email;
+    private String emailAddress;
 
     @Column(nullable = false)
     private String phoneNumber;
 
-
     private LocalDateTime createDate;
+
+
+
+
 
 
 

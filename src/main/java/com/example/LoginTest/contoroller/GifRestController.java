@@ -61,13 +61,10 @@ public class GifRestController {
         // test하기위해 사용함.
         // ** BindinResult 파라미터는 @Validated annotation이 부여된 파라미터 바로 뒤에 작성해야됨.
         log.info("-- @RequestBody Gif: {}", gifPostDto);
-
-
         // 가입된 유저가 headr에 Authorization jwt을 가지고 있을 경우에만 글을 쓸수 있도록 변경 > 권한 객체 : authentication
         gifPostDto.setUser(authentication.getName());
         return gifManager.create(gifPostDto.toEntity());
     }
-
 
 
     @DeleteMapping("/{id}")
