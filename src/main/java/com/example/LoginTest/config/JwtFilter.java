@@ -69,8 +69,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
 
-
-
         //권한 부여
         // 첫번째 파라미터 userName > email
         UsernamePasswordAuthenticationToken authenticationToken =
