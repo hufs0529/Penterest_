@@ -30,6 +30,7 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody UserJoinReqeustDto joinDto) {
+        log.info("UserController.join called()");
         userService.join(joinDto);
         return ResponseEntity.ok().body("회원가입이 성공했습니다.");
     }
@@ -37,6 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginReqeustDto loginReqeustDto) {
+        log.info("UserController.login called()");
         String token = userService.login(loginReqeustDto.getEmailAddress(), loginReqeustDto.getPassword());
         return ResponseEntity.ok().body(token);
     }
