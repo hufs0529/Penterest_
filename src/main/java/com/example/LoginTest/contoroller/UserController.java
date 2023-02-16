@@ -32,8 +32,8 @@ public class UserController {
     public ResponseEntity<String> join(@RequestBody UserJoinReqeustDto joinDto) {
         userService.join(joinDto);
         return ResponseEntity.ok().body("회원가입이 성공했습니다.");
-    }
 
+    }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginReqeustDto loginReqeustDto) {
@@ -73,5 +73,4 @@ public class UserController {
         log.info("-- @RequestParam Gif: {}", deleteUserId);
         return userService.removeUser(deleteUserId);
     }
-
 }
