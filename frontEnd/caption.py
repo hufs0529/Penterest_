@@ -21,8 +21,8 @@ import imageio
 s3_client = boto3.client(
       service_name="s3",
       region_name="ap-northeast-2",
-      aws_access_key_id='AKIA5F2LLCTUXLU3FZ7Q',
-      aws_secret_access_key='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'
+      aws_access_key_id='',
+      aws_secret_access_key=''
     )
 obj = s3_client.get_object(Bucket="penterest", Key="gifs/video.gif")
 file_stream = obj['Body']
